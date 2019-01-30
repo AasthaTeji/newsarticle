@@ -1,0 +1,55 @@
+
+
+    <div class="container-fluid" style="margin-top: 10%">
+      <div class="row">
+       
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          
+            <h4 style="text-align: center">Signup</h4>
+
+            <div *ngIf="status.signupStatus==false && status.emailExist==true"  class="alert alert-danger message">
+              <div data-dismiss="alert">User already exists</div>
+              </div>
+              <div *ngIf="status.signupStatus==true"  class="alert alert-success message">
+                  <div data-dismiss="alert">Signup Successful !!</div>
+                  </div> 
+          <form [formGroup]="signupForm">
+            <div class="form-group">
+              <div class="col-lg-12">
+                <input type="text" placeholder="Name" class="form-control" formControlName="name">
+              </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-12">
+                  <input type="text" placeholder="Email" class="form-control" formControlName="email">
+                </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-lg-12">
+                    <input type="password" placeholder="Password" class="form-control" formControlName="password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-12">
+                    <span style="padding-right: 20px;">Select preferred Language</span>
+                    <select formControlName="language">
+                    <option  *ngFor="let l of languages" [value]="l.id">{{l.name}} </option>
+                  </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                <div class="col-lg-12">
+                    <button id="btn-login" href="#" class="btn btn-primary " style="width: 100%" (click)="signup()"
+                      value="submit">Signup</button>
+                   </div>
+              </div>
+              <div style="text-align: center"> Have an account?
+                  <a class="login" [routerLink]="['/login']"> Login </a>
+                </div>
+          </form>
+         </div>
+      </div>
+    </div>
+
