@@ -19,6 +19,9 @@ public class Language {
 	@Column(name = "la_name")
 	private String name;
 
+	@Column(name = "la_code")
+	private String code;
+
 	public Language() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -38,6 +41,15 @@ public class Language {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import com.cts.newsarticle.service.LanguageService;
 @RestController
 public class LanguageController {
 	
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LanguageController.class);
 	
 	@Autowired
@@ -25,12 +26,9 @@ public class LanguageController {
 //	}
 	
 	@GetMapping("/list")
-	public List<Language> getLanguages(){
-
-		List<Language> languages= languageService.getLanguages();
-		LOGGER.debug("languages {}",languages);
-		return languages;
-		
+	public List<Language> fetchAllLanguage(){
+		LOGGER.info("START");
+		return languageService.fetchLanguages();
 	}
 	
 

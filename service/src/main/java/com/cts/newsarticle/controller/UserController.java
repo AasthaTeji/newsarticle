@@ -35,10 +35,11 @@ public class UserController extends ExceptionController{
 	
 	
 	@PostMapping("/login")
-	public ResponseEntity<AuthenticationStatus> login(@RequestBody User user){
-		LOGGER.info("Start");
-		AuthenticationStatus status = userService.authenticationStatus(user);
-		return new ResponseEntity<AuthenticationStatus>(status, HttpStatus.OK);
+	public AuthenticationStatus login(@RequestBody User user) {
+		LOGGER.info("START : Inside addUser() method of UserController");
+		LOGGER.debug("User Object :  {}", user);
+
+		return userService.authenticationStatus(user);
 	}
 	
 

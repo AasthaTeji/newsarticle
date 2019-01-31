@@ -39,8 +39,9 @@ private static final Logger LOGGER = LoggerFactory.getLogger(SpringMockMvcTest.c
 	@Test
 	public void testUserSignup() throws Exception {
 		LOGGER.info("Start");
-		String EMPLOYEE_REQUEST = "{\"email\" : \"akash@gmail.com\"" + "," + "\"name\" : \"akash\""
-				+ "," + "\"password\" : \"akash1023\"}";
+		String EMPLOYEE_REQUEST ="{\"name\":\"Aastha Teji\"," + "\"email\":\"aastha@gmail.com\","
+				+ "\"password\":\"A123456\"," + "\"language\":{\"id\":\"1\"},"
+				+ "\"role\":{\"id\":2}}";
 		mockMvc.perform(post("/signup").content(EMPLOYEE_REQUEST).contentType("application/json;charset=UTF-8"))
 				.andExpect(status().is2xxSuccessful())
 				.andExpect(jsonPath("$.signupStatus").value("true"))
@@ -53,12 +54,79 @@ private static final Logger LOGGER = LoggerFactory.getLogger(SpringMockMvcTest.c
 	public void testNameIsNull() throws Exception {
 		LOGGER.info("Start");
 	
-		String EMPLOYEE_REQUEST = "{\"email\" : \"aksh@gmail.com\"" + ","  + "\"password\" : \"akash1023\"}";
+		String EMPLOYEE_REQUEST = "{\"email\":\"aastha@gmail.com\"," + "\"password\":\"A123456\"," +
+							"\"language\":{\"id\":\"1\"}," + "\"role\":{\"id\":2}}";
 		mockMvc.perform(post("/signup").content(EMPLOYEE_REQUEST).contentType("application/json;charset=UTF-8"))
 				.andExpect(status().is4xxClientError())
 				.andExpect(jsonPath("$.errorMessage").value("Input validation failed: User Name cannot be empty"));
 		LOGGER.info("end");
 		
 	}
+	
+	@Test
+	public void testPasswordIsNull() throws Exception {
+		LOGGER.info("Start");
+
+		String EMPLOYEE_REQUEST = "{\"name\":\"Aastha\"," + "\"email\":\"aastha@gmail.com\","
+				 + "\"language\":{\"id\":\"1\"},"  + "\"role\":{\"id\":2}}";
+		mockMvc.perform(post("/signup").content(EMPLOYEE_REQUEST).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.errorMessage").value("Input validation failed: Password cannot be empty"));
+		LOGGER.info("end");
+	}
+	
+	@Test
+	public void testEmailIsNull() throws Exception {
+		LOGGER.info("Start");
+		
+		String EMPLOYEE_REQUEST = "{\"name\":\"Aastha\"," + "\"password\":\"A123456\"," + "\"language\":{\"id\":\"1\"},"
+				+ "\"role\":{\"id\":2}}";
+		mockMvc.perform(post("/signup").content(EMPLOYEE_REQUEST).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.errorMessage").value("Input validation failed: Email cannot be empty"));
+		LOGGER.info("end");
+
+	}
+	
+	@Test
+	public void testCheckEmailPattern() throws Exception {
+		LOGGER.info("Start");
+		
+		String EMPLOYEE_REQUEST = "{\"name\":\"Aastha\"," + "\"email\":\"mail.com\","
+				+ "\"password\":\"A123456\"," + "\"language\":{\"id\":\"1\"},"
+				+ "\"role\":{\"id\":2}}";
+		mockMvc.perform(post("/signup").content(EMPLOYEE_REQUEST).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.errorMessage").value("Input validation failed: Email address is invalid"));
+		LOGGER.info("end");
+
+	}
+	
+	@Test
+	public void testPasswordSize() throws Exception {
+		LOGGER.info("Start");
+		
+		String EMPLOYEE_REQUEST ="{\"name\":\" Aastha\"," + "\"email\":\"aast@gmail.com\","
+				+ "\"password\":\"67\"," + "\"language\":{\"id\":\"1\"}," + "\"role\":{\"id\":2}}";
+		mockMvc.perform(post("/signup").content(EMPLOYEE_REQUEST).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.errorMessage").value("Input validation failed: Password must be 6 to 15 characters"));
+		LOGGER.info("end");
+
+	}
+	
+	@Test
+	public void testForExistingEmailSignup() throws Exception {
+		LOGGER.info("Testing for unsuccessful Signup with existing email field..");
+		String testData ="{\"name\":\"Aastha\"," + "\"email\":\"saikat@gmail.com\"," + "\"password\":\"A123456\"," + 
+					"\"language\":{\"id\":\"1\"}," + "\"role\":{\"id\":2}}";
+		LOGGER.debug("Test Data -> {}", testData);
+		mockMvc.perform(post("/signup").content(testData).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.signupStatus").value("false"))
+				.andExpect(jsonPath("$.emailExist").value("true"));
+				
+	}
+	
 
 }

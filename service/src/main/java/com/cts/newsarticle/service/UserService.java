@@ -6,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cts.newsarticle.AuthenticationStatus;
+import com.cts.newsarticle.Repository.UserRepository;
 import com.cts.newsarticle.bean.SignupStatus;
 import com.cts.newsarticle.bean.User;
 import com.cts.newsarticle.controller.UserController;
@@ -20,7 +22,7 @@ public class UserService {
 	
 	
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userRepository;
 	
 	
 	public SignupStatus signup(User user){
@@ -29,7 +31,7 @@ public class UserService {
 		SignupStatus status = new SignupStatus();
 		status.setEmailExist(false);
 
-		User existingUser = userDao.getUserByEmail(user.getEmail());
+		User existingUser = userRepository.findUserByEmail(user.getEmail());
 		LOGGER.debug("User from database :{}", existingUser);
 		if (existingUser != null) {
 			LOGGER.info("user exists");
@@ -37,7 +39,7 @@ public class UserService {
 		}
 		if (!status.isEmailExist()) {
 
-			userDao.save(user);
+			userRepository.save(user);
 			status.setSignupStatus(true);
 			LOGGER.info("Signup successful");
 		}
@@ -48,9 +50,9 @@ public class UserService {
 	
 	@Transactional
 	public AuthenticationStatus authenticationStatus(User user){
-		
+		LOGGER.info("Start");
 		String email= user.getEmail();
-		User existingUser= userDao.getUserByEmail(email);
+		User existingUser= userRepository.findUserByEmail(user.getEmail());
 		
 		String password = user.getPassword();
 		String existingPassword =existingUser.getPassword();
@@ -62,12 +64,15 @@ public class UserService {
 			
 			if(password.equals(existingPassword)){
 				status.setAuthentication(true);
-				status.setUser(user);
+				status.setUser(existingUser);
 			}
 		}
-		
+		LOGGER.info("end");
 		return status;
 	}
+	
+	
+	
 }
 		
 		

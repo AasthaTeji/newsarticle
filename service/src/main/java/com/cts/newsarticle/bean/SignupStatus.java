@@ -10,6 +10,15 @@ public class SignupStatus {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public SignupStatus(boolean signupStatus, boolean emailExist) {
+		super();
+		this.signupStatus = signupStatus;
+		this.emailExist = emailExist;
+	}
+
+
 	public boolean isSignupStatus() {
 		return signupStatus;
 	}
