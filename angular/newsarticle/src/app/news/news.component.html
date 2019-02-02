@@ -1,79 +1,118 @@
+<br>
 
-
-<br><br><br>
+<br>
+<br>
 <div class="box">
-		<div class="row" >
-				<div class="col-lg-4 col-12">
-					
-				</div>
-				<div class="col-lg-4  col-12" style="padding-bottom: 30px;">
-					<form class="form-inline mr-auto">
-						<input class="form-control mr-sm-2" type="text" placeholder="Enter news article to search" aria-label="Search" style="width:70%;" #search>
-						<button class="btn btn-primary" (click)="searchArticle(search.value)" type="submit" >Search</button>
-					</form>
-				</div>
-				<div class="col-lg-4  col-12">
-					
-				</div>
+	<div class="row">
+		<div class="col-lg-4 col-12">
+
+		</div>
+		<div class="col-lg-4  col-12" style="padding-bottom: 30px;">
+			<form class="form-inline mr-auto">
+				<input class="form-control mr-sm-2" type="text" placeholder="Enter news article to search" aria-label="Search" style="width:70%;"
+				 #search>
+				<button class="btn btn-primary" (click)="searchArticle(search.value)" type="submit">Search</button>
+			</form>
+		</div>
+		<div class="col-lg-4  col-12">
+			<button class="btn btn-danger" (click)="listFavArticles()" type="submit">Favourite Articles</button>
+		</div>
+
 
 			
-		
-    <div class="container" style="background: rgb(209, 200, 200)">
-				<div *ngIf="mode.newsArticle == true"></div>
-     	<div class="row" >
-			 
-			    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" *ngFor="let article of articlesResponse; " >
-               
-					<div class="box-part text-center">
-            <div class="title">
-							<h5>{{article.title}}</h5>
-						</div>
-						<img class="card-img-top image" src="{{article.urlToImage}}" alt="...">           
-						<div class="text">
-							<span>{{article.description}}</span>
-						</div>
-							<h6>{{article.author}}</h6>   
-							<h6>{{article.url}}</h6>  
-						      
-							<div class="card-footer">
-								<small class="text-muted">{{article.publishedAt | date}}</small>
-								<span class="fav"><i class="far fa-star" (click)="markFavourite(article);"></i></span>
-							</div>
-                        
-					 </div>
-				</div>	 
-				
-			</div>		
-		</div>
-
-
 		<div class="container" style="background: rgb(209, 200, 200)">
-				<div *ngIf="mode.searchArticle == true"></div>
-     	<div class="row" >
-			 
-			    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" *ngFor="let article of articlesResponse; " >
-               
+				<div *ngIf="mode.newsArticle == true">
+				<div class="row">
+
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" *ngFor="let article of articlesResponse; ">
+
 					<div class="box-part text-center">
-            <div class="title">
+						<div class="title">
 							<h5>{{article.title}}</h5>
 						</div>
-						<img class="card-img-top image" src="{{article.urlToImage}}" alt="...">           
+						<img class="card-img-top image" src="{{article.urlToImage}}" alt="...">
 						<div class="text">
 							<span>{{article.description}}</span>
 						</div>
-							<h6>{{article.author}}</h6>   
-							<h6>{{article.url}}</h6>  
-						      
+						<h6>Author: {{article.author}}</h6>
+						<!-- <h6>{{article.url}}</h6> -->
+
+						<div class="card-footer">
+							<small class="text-muted">{{article.publishedAt | date}}</small>
+							<span class="fav">
+								<i class="far fa-star" (click)="markFavourite(article);"></i>
+							</span>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		
+		<div class="container" style="background: rgb(209, 200, 200)">
+				<div *ngIf="mode.searchArticle == true">
+			<div class="row">
+
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" *ngFor="let article of articlesResponse; ">
+
+					<div class="box-part text-center">
+						<div class="title">
+							<h5>{{article.title}}</h5>
+						</div>
+						<img class="card-img-top image" src="{{article.urlToImage}}" alt="...">
+						<div class="text">
+							<span>{{article.description}}</span>
+						</div>
+						<h6>Author: {{article.author}}</h6>
+						<!-- <h6>{{article.url}}</h6> -->
+
+						<div class="card-footer">
+							<small class="text-muted">{{article.publishedAt | date}}</small>
+							<span class="fav">
+								<i class="far fa-star" (click)="markFavourite(article);"></i>
+							</span>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+		</div>
+
+		
+			<div class="container" style="background: rgb(209, 200, 200)">
+					<div *ngIf="mode.favArticle == true"></div>
+				<div class="row">
+
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" *ngFor="let article of favArticles; ">
+
+						<div class="box-part text-center">
+							<div class="title">
+								<h5>{{article.title}}</h5>
+							</div>
+							<img class="card-img-top image" src="{{article.urlToImage}}" alt="...">
+							<div class="text">
+								<span>{{article.description}}</span>
+							</div>
+							<h6>Author: {{article.author}}</h6>
+							<!-- <h6>{{article.url}}</h6> -->
+
 							<div class="card-footer">
 								<small class="text-muted">{{article.publishedAt | date}}</small>
-								<span class="fav"><i class="far fa-star" (click)="markFavourite(article);"></i></span>
+								<span class="fav">
+										<i class="fas fa-trash-alt" (click)="deleteFavarticle(article);"></i>
+									</span>
 							</div>
-                        
-					 </div>
-				</div>	 
-				
-			</div>		
-		</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		
 
 	</div>
 </div>

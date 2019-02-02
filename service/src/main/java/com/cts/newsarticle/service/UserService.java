@@ -55,12 +55,15 @@ public class UserService {
 		User existingUser= userRepository.findUserByEmail(user.getEmail());
 		
 		String password = user.getPassword();
-		String existingPassword =existingUser.getPassword();
+		LOGGER.debug("user password {}",password);
+		
 		
 		AuthenticationStatus status = new AuthenticationStatus();
 		status.setAuthentication(false);
 		
 		if( existingUser != null){
+			String existingPassword =existingUser.getPassword();
+			LOGGER.debug("Existing user password {}",existingPassword);
 			
 			if(password.equals(existingPassword)){
 				status.setAuthentication(true);

@@ -68,6 +68,25 @@ public class User {
 	}
 	
 	
+	
+	
+	public User(int id,
+			@NotNull(message = "User Name cannot be empty") @Size(min = 1, max = 50, message = "Name must be 3 to 50 characters") String name,
+			@NotNull(message = "Email cannot be empty") @Size(min = 3, max = 30, message = "Email must be 3 to 10 characters") @Pattern(regexp = ".+@.+\\..+", message = "Email address is invalid") String email,
+			@NotNull(message = "Password cannot be empty") @Size(min = 6, max = 15, message = "Password must be 6 to 15 characters") String password,
+			Role role, Language language) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.language = language;
+	}
+
+
+
+
 	public int getId() {
 		return id;
 	}

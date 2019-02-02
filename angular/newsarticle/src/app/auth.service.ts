@@ -14,7 +14,7 @@ export class AuthService {
   }
   logout() {
     this.isLoggedIn = false;
-    this.router.navigate(['login']);
+    this.router.navigate(['']);
   }
 
 setUser(user){

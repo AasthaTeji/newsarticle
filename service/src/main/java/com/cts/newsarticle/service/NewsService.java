@@ -1,6 +1,6 @@
 package com.cts.newsarticle.service;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import com.cts.newsarticle.Repository.UserRepository;
 import com.cts.newsarticle.bean.Article;
 import com.cts.newsarticle.bean.User;
 import com.cts.newsarticle.controller.UserController;
-import com.cts.newsarticle.dao.UserDao;
 
 @Service
 public class NewsService {
@@ -36,7 +35,6 @@ public class NewsService {
 
 		if (actualArticle != null) {
 			articleStatus.setArticleExists(true);
-
 			LOGGER.info("article exists");
 		}
 
@@ -48,9 +46,7 @@ public class NewsService {
 			userRepository.save(user);
 			articleStatus.setArticleSaved(true);
 			articleStatus.setArticleSetFav(false);
-		}
-
-		else {
+		} else {
 
 			User user = userRepository.findUserByEmail(article.getEmail());
 			user.getArticles().add(actualArticle);
@@ -60,6 +56,35 @@ public class NewsService {
 
 		}
 		return articleStatus;
+	}
+	
+	public User listFavArticles(String email){
+		LOGGER.info("start");
+		LOGGER.info("Email id: {}",email);
+		User user = userRepository.findUserByEmail(email);
+		LOGGER.info("found fav articles");
+		return user;
+	}
+
+	public User deleteFavArticles(Article article){
+		LOGGER.info("start");
+		
+		//User user =new User();
+		User actualUser = userRepository.findUserByEmail(article.getEmail());
+		LOGGER.debug("Actual User from Database {}", actualUser );
+		List<Article> articles = actualUser.getArticles();
+//		Article article =newsRepository.getArticleByTitle(title);
+		for(int i=0;i< actualUser.getArticles().size();i++){
+			LOGGER.debug("Title of article {}", articles.get(i).getTitle() );
+			if(actualUser.getArticles().get(i).getTitle().equals(article.getTitle())){
+				articles.remove(i);
+				break;
+			}
+		
+		}
+		userRepository.save(actualUser);
+		LOGGER.info("deleted fav articles");
+		return actualUser;
 	}
 
 }

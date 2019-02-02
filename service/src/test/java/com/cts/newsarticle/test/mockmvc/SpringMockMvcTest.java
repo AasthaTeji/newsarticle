@@ -117,7 +117,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(SpringMockMvcTest.c
 	
 	@Test
 	public void testForExistingEmailSignup() throws Exception {
-		LOGGER.info("Testing for unsuccessful Signup with existing email field..");
+		LOGGER.info("Start");
 		String testData ="{\"name\":\"Aastha\"," + "\"email\":\"saikat@gmail.com\"," + "\"password\":\"A123456\"," + 
 					"\"language\":{\"id\":\"1\"}," + "\"role\":{\"id\":2}}";
 		LOGGER.debug("Test Data -> {}", testData);
@@ -128,5 +128,38 @@ private static final Logger LOGGER = LoggerFactory.getLogger(SpringMockMvcTest.c
 				
 	}
 	
+	@Test
+	public void testForLogin() throws Exception {
+		LOGGER.info("Start");
+		String testData ="{\"email\":\"kiran@gmail.com\"," + "\"password\":\"A123456\"}";
+		LOGGER.debug("Test Data -> {}", testData);
+		mockMvc.perform(post("/login").content(testData).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is2xxSuccessful())
+				.andExpect(jsonPath("$.authentication").value("true"));
+				
+				
+	}
+	
+	@Test
+	public void testCorrectEmailLogin() throws Exception {
+		LOGGER.info("Start");
+		String testData ="{\"email\":\"aa@gmail.com\"," + "\"password\":\"A123456\"}";
+		LOGGER.debug("Test Data -> {}", testData);
+		mockMvc.perform(post("/login").content(testData).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.authentication").value("false"));
+		}
+	
+	@Test
+	public void testCorrectPasswordLogin() throws Exception {
+		LOGGER.info("Start");
+		String testData ="{\"email\":\"kiran@gmail.com\"," + "\"password\":\"A9999956\"}";
+		LOGGER.debug("Test Data -> {}", testData);
+		mockMvc.perform(post("/login").content(testData).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.authentication").value("false"));
+				
+				
+	}
 
 }
