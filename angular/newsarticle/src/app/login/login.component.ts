@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Router } from '../../../node_modules/@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { AuthService } from '../auth.service';
 
@@ -10,16 +10,23 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  emailPattern = "^[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-zA-Z]{2,4}$";
   json:any;
   error:any;
   user:any;
+  incorrectLogin:any;
+
   loginForm = new FormGroup({
     
     email: new FormControl(
-      ''
+      '', [Validators.required,
+      Validators.pattern(this.emailPattern)],
     ),
     password: new FormControl(
-      ''
+      '',[Validators.required,
+        Validators.minLength(6),
+      Validators.maxLength(15)
+      ]
      ),
      
   })
@@ -33,11 +40,16 @@ export class LoginComponent implements OnInit {
       data => {
         console.log(data)
         if (data.authentication) {
-          this.authService.login();
+          console.log(data.user.role);
+         
           this.authService.setUser(data.user);
+          this.authService.setRole(data.user.role.name);
+          this.authService.setToken(data.token);
+          this.authService.login();
           this.router.navigate(['/news']);
+          this.incorrectLogin=false;
         } else {
-          return false;
+          this.incorrectLogin = true;
         }
        
       },

@@ -18,14 +18,17 @@
 			<button class="btn btn-danger" (click)="listFavArticles()" type="submit">Favourite Articles</button>
 		</div>
 
-
+		
 			
-		<div class="container" style="background: rgb(209, 200, 200)">
+		<div class="container" >
 				<div *ngIf="mode.newsArticle == true">
+						<div class="row ">
+								<h2 class="heading">Top News Headlines</h2>
+						</div>	
 				<div class="row">
-
-				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" *ngFor="let article of articlesResponse; ">
-
+						
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 flex-container" style="background: rgb(209, 200, 200)" *ngFor="let article of articlesResponse; ">
+						
 					<div class="box-part text-center">
 						<div class="title">
 							<h5>{{article.title}}</h5>
@@ -55,7 +58,7 @@
 				<div *ngIf="mode.searchArticle == true">
 			<div class="row">
 
-				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" *ngFor="let article of articlesResponse; ">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 flex-container" *ngFor="let article of articlesResponse; ">
 
 					<div class="box-part text-center">
 						<div class="title">
@@ -85,10 +88,11 @@
 		
 			<div class="container" style="background: rgb(209, 200, 200)">
 					<div *ngIf="mode.favArticle == true"></div>
+					
 				<div class="row">
-
-					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" *ngFor="let article of favArticles; ">
-
+						
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 flex-container" *ngFor="let article of favArticles; ">
+							
 						<div class="box-part text-center">
 							<div class="title">
 								<h5>{{article.title}}</h5>

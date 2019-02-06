@@ -15,9 +15,10 @@ const httpOptions = {
 
 export class NewsService {
 
-  markArticleUrl : string = "/newsarticle/save"
-  listArticleUrl : string ="/newsarticle/show/"
-  deleteFavArticleUrl :string ="/newsarticle/delete"
+  markArticleUrl : string = "/newsarticle/rest/save"
+  listArticleUrl : string ="/newsarticle/rest/show/"
+  deleteFavArticleUrl :string ="/newsarticle/rest/delete"
+  searchAnalystUrl :string="/newsarticle/rest/search/"
   constructor(private http: HttpClient) { }
 
   markFavourite(articleData): Observable<any> {
@@ -29,5 +30,9 @@ export class NewsService {
   }
   deleteFavarticle(article): Observable<any> {
     return this.http.post(this.deleteFavArticleUrl,article,httpOptions);
+  }
+
+  searchAnalyst(name): Observable<any> {
+    return this.http.get(this.searchAnalystUrl + name);
   }
 }

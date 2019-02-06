@@ -11,13 +11,13 @@ const httpOptions ={
     providedIn: 'root'
 })
 export class SignupService{
-    url: string = "/newsarticle/signup"
-    url1: string = "/newsarticle/list"
+    signupUrl: string = "/newsarticle/signup"
+    fetchLanguageUrl: string = "/newsarticle/list"
     constructor(private http: HttpClient){}
     signup(json): Observable<any>{
-        return this.http.post<any>(this.url, json, httpOptions);
+        return this.http.post<any>(this.signupUrl, json, httpOptions);
     }
     fetchAllLanguages(): Observable<any>{
-        return this.http.get<any>(this.url1);
+        return this.http.get<any>(this.fetchLanguageUrl);
     }
 }

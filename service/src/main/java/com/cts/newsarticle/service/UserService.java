@@ -38,7 +38,7 @@ public class UserService {
 			status.setEmailExist(true);
 		}
 		if (!status.isEmailExist()) {
-
+			user.setStatus("false");
 			userRepository.save(user);
 			status.setSignupStatus(true);
 			LOGGER.info("Signup successful");
@@ -72,6 +72,13 @@ public class UserService {
 		}
 		LOGGER.info("end");
 		return status;
+	}
+	
+	public User search(String name){
+		LOGGER.info("start");
+		User user = userRepository.findUserByName(name);
+		LOGGER.info("found user");
+		return user;
 	}
 	
 	

@@ -10,16 +10,35 @@
 
            
           <form [formGroup]="loginForm">
-            
+            <div class="form-row">
+              <div *ngIf="error" class="col form-group alert alert-danger" role="alert">
+                System Error. Please contact admin or try again Later .
+              </div>
+              
+              <div *ngIf="incorrectLogin" class="col form-group alert alert-danger" role="alert">
+                 Invalid Email Id or Password.
+                </div>
+                </div>
+
             <div class="form-group">
                 <div class="col-lg-12">
-                  <input type="text" placeholder="Email" class="form-control" formControlName="email">
+                  <input type="text" placeholder="Email" class="form-control" id="loginemail" formControlName="email">
+                  <div *ngIf="loginForm.get('email').touched && loginForm.get('email').invalid">
+                      <div *ngIf="loginForm.get('email').errors.required" class="danger validation ">Email is required.</div>
+                      <div *ngIf="loginForm.get('email').errors.pattern" class="danger validation">Email pattern is not valid.</div>
+                    </div>
                 </div>
-              </div>
+                </div>
+             
               <div class="form-group">
                   <div class="col-lg-12">
-                    <input type="password" placeholder="Password" class="form-control" formControlName="password">
+                    <input type="password" placeholder="Password" class="form-control" id="loginpassword" formControlName="password">
+                    <div *ngIf="loginForm.get('password').touched && loginForm.get('password').invalid">
+                    <div *ngIf="loginForm.get('password').errors.required" class="danger validation">Password is required</div>
+                    <div *ngIf="loginForm.get('password').errors.minlength" class="danger validation">Password must contain minimum 6 characters</div>
+                    <div *ngIf="loginForm.get('password').errors.maxlength" class="danger validation">Password must contain maximum 15 characters</div>
                   </div>
+                </div>
                 </div>
                 <div class="form-group">
                 <div class="col-lg-12">

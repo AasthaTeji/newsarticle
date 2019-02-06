@@ -29,6 +29,7 @@ export class NewsComponent implements OnInit {
     this.mode.newsArticle = true;
     this.userData = this.authService.getUser();
 
+
     const NewsAPI = require('newsapi');
     const newsapi = new NewsAPI('93f5f428aff044fa85ff16e9e77eb635');
     console.log(this.userData.language.code)
@@ -37,11 +38,13 @@ export class NewsComponent implements OnInit {
            /*  domains: 'bbc.co.uk, techcrunch.com',  */
 
       language: this.userData.language.code,
+      
       sortBy: 'relevancy',
      
     }).then(response => {
       console.log(response);
       this.articlesResponse = response.articles;
+      
 
     });
   }
@@ -75,6 +78,7 @@ export class NewsComponent implements OnInit {
       sortBy: 'relevancy',
       page: 2
     }).then(response => {
+      this.mode.searchArticle = true;
       console.log(response);
       this.articlesResponse = response.articles;
 

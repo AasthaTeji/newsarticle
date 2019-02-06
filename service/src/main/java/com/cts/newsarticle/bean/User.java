@@ -45,6 +45,9 @@ public class User {
 	@Column(name = "us_password")
 	private String password;
 	
+	@Column(name = "us_status")
+	private String status;
+	
 	@ManyToOne(cascade = CascadeType.MERGE) 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@JoinColumn(name = "us_ro_id")
@@ -147,14 +150,31 @@ public class User {
 		this.articles = articles;
 	}
 
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
-				+ ", language=" + language + "]";
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", status="
+				+ status + ", role=" + role + ", language=" + language + ", articles=" + articles + "]";
 	}
 
-	
+
+
+
+
 	
 }

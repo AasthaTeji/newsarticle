@@ -6,9 +6,11 @@ import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
 import {LoginComponent} from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NewsComponent } from './news/news.component';
 import { HeaderComponent } from './header/header.component';
+import { FindanalystComponent } from './findanalyst/findanalyst.component';
+import { JwtInterceptor } from './jwtInterceptor';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { HeaderComponent } from './header/header.component';
     SignupComponent,
     LoginComponent,
     NewsComponent,
-    HeaderComponent
+    HeaderComponent,
+    FindanalystComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,9 @@ import { HeaderComponent } from './header/header.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

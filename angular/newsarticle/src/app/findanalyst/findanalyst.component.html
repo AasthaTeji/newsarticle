@@ -1,0 +1,43 @@
+<br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2 col-md-2 "></div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+      <input type="text" class="form-control" placeholder="Search News Analyst" #name>
+    </div>
+
+    <div class="col-lg-2  col-md-2 col-sm-12 col-12 ">
+      <button class="btn btn-primary inline-block col-12 col-sm-12" (click)="searchAnalyst(name.value)"> Search </button>
+    </div>
+
+    <div class="col-lg-2 col-md-2"> </div>
+
+  </div>
+
+
+</div>
+
+<br><br>
+<div class="container">
+
+  <div class="row">
+
+<div *ngIf="this.analystStatus == true">
+    <div class="card m-2" >
+
+      <img src="https://nulm.gov.in/images/user.png" alt="Avatar" >
+      <div class="container">
+        <h5><b>Name : {{analyst.name}}</b></h5>
+        <p>Email : {{analyst.email}}</p>
+         <p>Role : {{analyst.role.name}}</p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  </div>
+
+
+</div>
